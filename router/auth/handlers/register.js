@@ -10,7 +10,7 @@ exports.schemas = {
     properties: {
       userName: { type: 'string', minLength: 1 },
       name: { type: 'string', minLength: 1, maxLength: 60 },
-      sureName: { type: 'string', minLength: 1, maxLength: 60 },
+      surName: { type: 'string', minLength: 1, maxLength: 60 },
       password: { type: 'string', minLength: 6, maxLength:  120, pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.])' },
       email: { type: 'string', format: 'email' },
      
@@ -39,7 +39,6 @@ exports.preHandler = async (req, res, done) => {
 
 exports.handler = async (req, res) => {
   try {
-    const AMOUNT = 1
     const user = req.body
     const password = await passwordHassing(user.password)
     // const verifyC = generateRandomCode()
@@ -48,7 +47,7 @@ exports.handler = async (req, res) => {
       password: password,
       email: user.email,
       name: user?.name,
-      sureName: user?.userName,
+      surName: user?.userName,
      
     }
    

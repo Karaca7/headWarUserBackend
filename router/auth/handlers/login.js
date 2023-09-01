@@ -16,7 +16,7 @@ exports.schema = {
 exports.preHandler = async (req, res) => {
   const { email, password } = req?.body;
   const hashPasword=passwordHassing(password)
-  let result = await req.db("users").select().where({ email, hashPasword });
+  let result = await req.db("users").select().where({ email, password:hashPasword });
 
   if (result.length <= 0)
     return res.send("Lütfen geçerli bir kullanıcı giriniz");
