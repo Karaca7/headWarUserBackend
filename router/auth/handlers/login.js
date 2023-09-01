@@ -1,4 +1,6 @@
 const { setUser } = require("../../../utils/sessions");
+const { passwordHassing } = require("../../../utils/password");
+
 
 exports.schema = {
   body: {
@@ -13,7 +15,8 @@ exports.schema = {
 
 exports.preHandler = async (req, res) => {
   const { email, password } = req?.body;
-  let result = await req.db("users").select().where({ email, password });
+  const hashPasword=passwordHassing(password)
+  let result = await req.db("users").select().where({ email, hashPasword });
 
   if (result.length <= 0)
     return res.send("Lütfen geçerli bir kullanıcı giriniz");

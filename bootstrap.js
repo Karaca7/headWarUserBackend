@@ -1,6 +1,6 @@
 const { routes } = require("./router/index");
 
-const {verifyRequest}=require('./utils/sessions')
+const { verifyRequest } = require("./utils/sessions");
 const Knex = require("knex").default;
 
 const Redis = require("ioredis").default;
@@ -36,7 +36,7 @@ module.exports = async (app) => {
 
     if (req.context.config.private) {
       console.log(req.context.config.private);
-    const verify=  verifyRequest(req,res)
+      const verify = verifyRequest(req, res);
       //session control yapılmalı redis üzerinde login mi değil mi kontorl edilmeli
     }
 
@@ -52,8 +52,80 @@ module.exports = async (app) => {
 
   //regiter route
   await registerRouter(app);
+
+  // response sechema
+
+  await addResponse(app);
 };
 
 const registerRouter = async (app) => {
   await app.register(routes["auth"], { prefix: "/v1/auth" });
+};
+
+const addResponse = async (app) => {
+  app.decorateReply("serverError", function (data, error = "") {
+    if (!this.sent) {
+      return this.code(500)
+        .header("Content-Type", "application/json")
+        .send({
+          status: false,
+          message: "Server hatası lütfen daha sonra tekrar deneyin.",
+        });
+    }
+  });
+  app.decorateReply("badRequest", function (message, req = null) {
+    if (!this.sent) {
+      return this.code(400)
+        .header("Content-Type", "application/json")
+        .send({
+          status: false,
+          message: message
+            ? message
+            : "Geçersiz istek: Eksik veya hatalı alanlar.",
+        });
+    }
+  });
+
+  app.decorateReply("success", function (data, message) {
+    if (!this.sent) {
+      return this.code(200)
+        .header("Content-Type", "application/json")
+        .send({
+          status: true,
+          message: message ? message : "İşlem başarıyla gerçekleşti.",
+          data: data,
+        });
+    }
+  });
+
+  app.decorateReply("notFound", function (message) {
+    if (!this.sent) {
+      app.log.error(message);
+      return this.code(404)
+        .header("Content-Type", "application/json")
+        .send({
+          status: false,
+          message: message ? message : "Kaynak bulunamadı.",
+        });
+    }
+  });
+  app.decorateReply("failed", function (data, message) {
+    if (!this.sent) {
+      return this.code(404)
+        .header("Content-Type", "application/json")
+        .send({
+          status: false,
+          message: message ? message : "İşlem başarısız oldu.",
+          data: data,
+        });
+    }
+  });
+
+  app.decorateReply("deneme", function (data) {
+    if (!this.sent) {
+      return this.code(200)
+        .header("Content-Type", "application/json")
+        .send({ data: "data" });
+    }
+  });
 };
