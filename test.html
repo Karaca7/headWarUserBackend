@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <h1>konsolu aç ctrl+j</h1>
+    <p>
+        server sent event moder bir haberleşme tekniğidir. suncuya abone olursun ve header kısımında mime type ın
+        text/event-stream  ve connection da keep alive olarak istek atarsın
+        sunucu tamam kardeşim bende derdinin dermanı der ve sana yine aynı mime type ile text/event-stream ile her event
+        tetiklendiğinde data yollar
+
+    </p>
+
+    <script>
+
+
+        // const eventSource = new EventSource('http://localhost:3000/v1/users/find');
+
+        const eventSource = new EventSource('http://localhost:3000/v1/users/find');
+
+        let count = 0;
+        eventSource.addEventListener('message', (event) => {
+            const eventData = event.data;
+            console.log(`Sunucudan mesaj alındı: ${eventData}`);
+
+            count += 1
+
+            console.log(count);
+            if (count == 10) {
+                console.log(count, "kapantı");
+
+
+                eventSource.close()
+            }
+        });
+
+
+
+        eventSource.addEventListener('error', (event) => {
+            console.error('SSE bağlantısı hatası:', event);
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>

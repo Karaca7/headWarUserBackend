@@ -5,6 +5,9 @@ const Knex = require("knex").default;
 
 const Redis = require("ioredis").default;
 
+
+
+
 const redis = new Redis({
   host: "127.0.0.1", // Redis sunucusunun IP adresi
   port: 6375, // Redis sunucusunun portu
@@ -60,6 +63,8 @@ module.exports = async (app) => {
 
 const registerRouter = async (app) => {
   await app.register(routes["auth"], { prefix: "/v1/auth" });
+  await app.register(routes["users"], { prefix: "/v1/users" });
+
 };
 
 const addResponse = async (app) => {

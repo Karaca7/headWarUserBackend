@@ -4,11 +4,24 @@ const cors = require('@fastify/cors').default
 // const senMailConsumer = require('./utils/rabbitConsumer/sendMailConsumer.js')
 
 // const resetPassword = require('./utils/rabbitConsumer/resetPassword.js')
+
+const {FastifySSEPlugin}=require('fastify-sse-v2')
+
 const app = require('fastify')({logger:true})
+
+
+
+
+app.register(FastifySSEPlugin)
 
 app.register(cors, {
   origin: '*' // İzin vermek istediğiniz etki alanını buraya belirtin
 })
+// app.register(require('fastify-sse'), {
+//   path: '/sse', // SSE için kullanılacak yol
+//   keepAlive: true, // Bağlantıyı aktif tut
+// });
+
 
 init(app)
   .then(() => {
