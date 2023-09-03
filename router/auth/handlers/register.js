@@ -4,7 +4,7 @@ const { passwordHassing, verifyAuth } = require('../../../utils/password')
 // const sendMail = require('../../../../utils/mailler.js')
 // const QUEUE_NAME = 'userVerify'
 
-exports.schemas = {
+exports.schema = {
   body: {
     type: 'object',
     properties: {
