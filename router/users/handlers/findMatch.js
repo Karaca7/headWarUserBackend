@@ -11,7 +11,9 @@ exports.handler = async (req, res) => {
         }
       })()
     );
+    const abortController = new AbortController();
 
+    
 
 
     req.socket.on('close', () => abortController.abort());
