@@ -9,13 +9,11 @@ exports.schema = {
     type: 'object',
     properties: {
       userName: { type: 'string', minLength: 1 },
-      name: { type: 'string', minLength: 1, maxLength: 60 },
-      surName: { type: 'string', minLength: 1, maxLength: 60 },
       password: { type: 'string', minLength: 6, maxLength:  120, pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*.])' },
       email: { type: 'string', format: 'email' },
      
     },
-    required: ['name', 'email', 'password']
+    required: ['userName', 'email', 'password']
   },
  
 }
@@ -46,8 +44,6 @@ exports.handler = async (req, res) => {
       userName: user?.userName,
       password: password,
       email: user.email,
-      name: user?.name,
-      surName: user?.userName,
      
     }
    
