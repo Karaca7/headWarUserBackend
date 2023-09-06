@@ -14,16 +14,23 @@ exports.schema = {
 };
 
 exports.preHandler = async (req, res) => {
-  const { email, password } = req?.body;
-  const hashPasword=passwordHassing(password)
-  let result = await req.db("users").select().where({ email, password:hashPasword });
 
-  if (result.length <= 0)
-    return res.send("Lütfen geçerli bir kullanıcı giriniz");
+  try{
+    const { email, password } = req?.body;
+    const hashPasword=passwordHassing(password)
+    let result = await req.db("users").select().where({ email, password:hashPasword });
+  
+    if (result.length <= 0)
+      return res.send("Lütfen geçerli bir kullanıcı giriniz");
+  
+    req.user = result[0];
+  
+    return;
 
-  req.user = result[0];
+  }catch(error){
+    res.serverError('500')
+  }
 
-  return;
 };
 exports.handler = async (req, res) => {
   console.log(req.user);

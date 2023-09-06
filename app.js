@@ -11,7 +11,6 @@ const app = require('fastify')({logger:true})
 
 
 
-
 app.register(FastifySSEPlugin)
 
 app.register(cors, {

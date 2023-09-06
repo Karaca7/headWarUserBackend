@@ -11,6 +11,7 @@ module.exports = async function (app, opt, done) {
   });
 
 
+
   app.route({
     url: "/register",
     method: "POST",
