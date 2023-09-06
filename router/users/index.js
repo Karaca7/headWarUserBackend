@@ -1,21 +1,19 @@
+const handlers = require("./handlers/index");
 
+module.exports = function (app, opt, done) {
+  app.route({
+    path: "/find",
+    method: "GET",
+    config: { private: false },
+    handler: handlers.findMatch.handler,
+  });
 
-const handlers=require('./handlers/index')
+  app.route({
+    path: "/request/join",
+    method: "POST",
+    config: { private: true },
+    handler: handlers.joinRequest.handler,
+  });
 
-module.exports=function(app,opt,done){
-
-
-console.log("tes1");
-
-
-    app.route({
-        path:'/find',
-        method:'GET',
-        config:{private:false},
-        handler:handlers.findMatch.handler
-
-    })
-
-
-    done()
-}
+  done();
+};

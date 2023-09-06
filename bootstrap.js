@@ -32,18 +32,18 @@ const knex = Knex({
 });
 
 module.exports = async (app) => {
-  app.addHook("onRequest", (req, res, done) => {
+  app.addHook("onRequest", async(req, res) => {
     req.db = knex;
 
     req.redis = redis;
 
     if (req.context.config.private) {
       console.log(req.context.config.private);
-      const verify = verifyRequest(req, res);
+      await  verifyRequest(req, res);
       //session control yapılmalı redis üzerinde login mi değil mi kontorl edilmeli
     }
-
-    done();
+return
+    // done();
   });
 
   //   console.log(app.db);

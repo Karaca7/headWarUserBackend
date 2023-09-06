@@ -3,5 +3,7 @@
 const findMatch= require('./findMatch')
 
 
+const joinRequest= require('./joinRequest')
 
-module.exports={findMatch}
+
+module.exports={findMatch,joinRequest}

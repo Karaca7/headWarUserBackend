@@ -7,7 +7,7 @@ const cors = require('@fastify/cors').default
 
 const {FastifySSEPlugin}=require('fastify-sse-v2')
 
-const app = require('fastify')({logger:true})
+const app = require('fastify')({logger:false})
 
 
 

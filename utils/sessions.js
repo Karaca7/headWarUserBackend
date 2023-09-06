@@ -26,9 +26,10 @@ async function verifyRequest(request, reply) {
     token = token.substring(7);
     user = await request.redis.hgetall("user:" + token);
 
-    if (user?.id === undefined) {
+    if (user?.userId === undefined) {
       return reply.code(401).send("autherization failed");
     }
+
     return (request.user = user);
   }
   return reply.code(401).send("autherization failed");
