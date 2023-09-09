@@ -4,7 +4,7 @@ module.exports = function (app, opt, done) {
   app.route({
     path: "/find",
     method: "GET",
-    config: { private: false },
+    config: { private: true },
     handler: handlers.findMatch.handler,
   });
 

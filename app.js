@@ -11,7 +11,7 @@ const app = require('fastify')({logger:false})
 
 
 
-app.register(FastifySSEPlugin)
+// app.register(FastifySSEPlugin)
 
 app.register(cors, {
   origin: '*' // İzin vermek istediğiniz etki alanını buraya belirtin

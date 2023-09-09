@@ -24,7 +24,7 @@
 
         // const eventSource = new EventSource('http://localhost:3000/v1/users/find');
         var randomInteger = Math.floor(Math.random() * 100) + 1;
-        const eventSource = new EventSource(`http://localhost:3000/v1/users/find?userI=${randomInteger}`);
+        const eventSource = new EventSource(`http://localhost:3000/v1/users/find?userI=${7}`);
 
         let count = 0;
         eventSource.addEventListener('message', (event) => {
@@ -38,7 +38,7 @@
                 console.log(count, "kapantı");
 
 
-                eventSource.close()
+                 eventSource.close()
             }
         });
 
