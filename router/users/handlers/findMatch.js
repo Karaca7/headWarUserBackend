@@ -9,7 +9,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const endpoint = 'ws://localhost:2567'; // Colyseus sunucusunun WebSocket adresi
+const endpoint = 'ws://localhost:2567'; // Colyseus sunucusunun WebSocket adresi /envye alınacak
 
 // Colyseus istemci bağlantısını oluşturun
 const client = new Colyseus.Client(endpoint);
@@ -24,7 +24,7 @@ exports.handler = async (req, res) => {
       "Content-Type": "text/event-stream",
       Connection: "keep-alive",
       "Cache-Control": "no-cache",
-      "Access-Control-Allow-Origin": "*", //corsa takılmak hoşuna gitmez ekle kardeşim
+      "Access-Control-Allow-Origin": "*",
     };
 
     console.log(req.headers["authorization"].split(" ")[1]);
@@ -67,16 +67,16 @@ exports.handler = async (req, res) => {
           for (let cc of matchedList) {
             console.log("flagg: ");
             clients = clients.filter((el) => el.id !== el.id);
-            return  client.response.raw.close();
+            client.response.raw.write(`data: ${JSON.stringify("matched")}\n\n`);
+
           }
         }
 
         if (client.count >= 300) {
-          client.response.raw.write(`data: ${JSON.stringify("bye!")}\n\n`);
+          client.response.raw.write(`data: ${JSON.stringify("connection time finshed!")}\n\n`);
 
           clients = clients.filter((el) => el.id !== client.id);
           // console.log(clients,"new clients list");
-          return await client.response.raw.close();
         }
 
         // console.log(client.count,"client count");
